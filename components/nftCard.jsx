@@ -1,0 +1,51 @@
+export const NFTCard = ({ nft }) => {
+  async function copyTextToClipboard(text) {
+    return await navigator.clipboard.writeText(text);
+  }
+
+  return (
+    <div className="w-1/4 flex flex-col ">
+      <div className="rounded-md">
+        <img
+          className="object-cover h-128 w-full rounded-t-md"
+          src={nft.media[0].gateway}
+        ></img>
+      </div>
+      <div className="flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 ">
+        <div className="">
+          <h2 className="text-xl text-gray-800">{nft.title}</h2>
+          <p className="text-gray-600">
+            Id: {nft.id.tokenId.substr(nft.id.tokenId.length - 4)}
+          </p>
+          <div className="flex">
+            <p className="text-gray-600 mr-2">{`${nft.contract.address.substr(
+              0,
+              4
+            )}...${nft.contract.address.substr(
+              nft.contract.address.length - 4
+            )}`}</p>
+            <button
+              onClick={() => copyTextToClipboard(nft.contract.address)}
+              className="bg-blue-200 py-1 px-2 rounded-lg"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-grow mt-2">
+          <p className="text-gray-600">{nft.description?.substr(0, 150)}</p>
+        </div>
+        <div className="flex justify-center mb-1">
+          <a
+            className="py-2 px-4 bg-blue-500 w-1/2 text-center rounded-md text-white cursor-pointer"
+            target={"_blank"}
+            href={`https://etherscan.io/token/${nft.contract.address}`}
+          >
+            View on Etherscan
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
